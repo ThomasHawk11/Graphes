@@ -3,7 +3,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import sae2_2.Arete;
 import sae2_2.Graphe;
@@ -47,7 +46,7 @@ public class GrapheMatrice implements Graphe{
 		
 	}
 	
-	//Renvoie la clé d'un Map à partir de sa valeur (seulement avec les assocations un-à-un)
+	//Renvoie la clé d'un Map à partir de la valeur (seulement avec les assocations un-à-un)
 	public static <T,E> T getKeysByValue(Map<T,E> map, E value){
 		for(Entry<T,E> entry : map.entrySet()) {
 			if (value.equals(entry.getValue())) {
@@ -92,7 +91,6 @@ public class GrapheMatrice implements Graphe{
 	        }
 	        return voisins;
 	    }
-	}
 
 	@Override
 	//Vérifie si deux sommets sont voisins
