@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import sae2_2.Arete;
 import sae2_2.Graphe;
@@ -38,27 +39,40 @@ public class GrapheMatrice implements Graphe{
 	    }
 
 	@Override
-	//Cr�ation du graphe
+	//Création du graphe
 	public void creerGraphe(Collection<Arete> arg0) {
         for (Arete arete : arg0) {
             ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
         }
 		
 	}
+	
+	//Renvoie la clé d'un Map à partir de sa valeur (seulement avec les assocations un-à-un)
+	public static <T,E> T getKeysByValue(Map<T,E> map, E value){
+		for(Entry<T,E> entry : map.entrySet()) {
+			if (value.equals(entry.getValue())) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
+
 
 	@Override
 	//Renvoi toutes les aretes du graphe
 	public Collection<Arete> getAretes() {
         ArrayList<Arete> aretes = new ArrayList<Arete>();
+   
         for (int i = 0; i < matriceDAdjacence.size(); i++) {
             for (int j = 0; j < matriceDAdjacence.size(); j++) {
                 if (matriceDAdjacence.get(i).get(j) != 0) {
-                    aretes.add(new Arete(i, j, matriceDAdjacence.get(i).get(j)));
+                    aretes.add(new Arete(getKeysByValue(dictionnaireDeSommets,i),getKeysByValue(dictionnaireDeSommets,i), matriceDAdjacence.get(i).get(j)));
                 }
             }
         }
         return aretes;
 	}
+	
 
 	@Override
 	//Renvoi le dictionnaire des sommets du graphe
@@ -73,7 +87,7 @@ public class GrapheMatrice implements Graphe{
 	        int nSommet = dictionnaireDeSommets.get(arg0);
 	        for (int i = 0; i < matriceDAdjacence.size(); i++) {
 	            if (matriceDAdjacence.get(nSommet).get(i) != 0.0) {
-	                voisins.add(new Voisin(i, matriceDAdjacence.get(nSommet).get(i)));
+	                voisins.add(new Voisin(getKeysByValue(dictionnaireDeSommets,i), matriceDAdjacence.get(nSommet).get(i)));
 	            }
 	        }
 	        return voisins;
@@ -81,7 +95,7 @@ public class GrapheMatrice implements Graphe{
 	}
 
 	@Override
-	//V�rifie si deux sommets sont voisins
+	//Vérifie si deux sommets sont voisins
     public boolean sontVoisins(String sommet1, String sommet2) {
         int numSommet1 = dictionnaireDeSommets.get(sommet1);
         int numSommet2 = dictionnaireDeSommets.get(sommet2);
