@@ -1,3 +1,5 @@
+package sae2_02;
+
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -40,9 +42,11 @@ public class GrapheListe implements Graphe{
         return aretes;
     }
     
-    //Création du graphe
+    //CrÃ©ation du graphe
     public void creerGraphe(Collection<Arete> aretes){
         for(Arete a : aretes){
+        	ajouteSommet(a.getU());
+        	ajouteSommet(a.getV());
             ajouteArete(a.getU(), a.getV(), a.getPoids());
         }
     }
@@ -56,7 +60,7 @@ public class GrapheListe implements Graphe{
         return voisins;
     }
     
-    //Vérifie si deux sommets sont voisins
+    //VÃ©rifie si deux sommets sont voisins
     public boolean sontVoisins(String arg0, String arg1){
         return listeDAdjacence.get(arg0).contains(new Arete(arg0, arg1, 0));
     }
