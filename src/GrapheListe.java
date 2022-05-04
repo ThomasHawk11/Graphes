@@ -35,19 +35,23 @@ public class GrapheListe implements Graphe{
     
     //renvoi les aretes du graphe
     public Collection<Arete> getAretes(){
-        Collection<Arete> aretes = new ArrayList<Arete>();
-        for(String s : listeDAdjacence.keySet()){
-            aretes.addAll(listeDAdjacence.get(s));
+        ArrayList<Arete> aretes = new ArrayList<Arete>();        
+        for (String s : listeDAdjacence.keySet()) {
+        	for(Arete a : listeDAdjacence.get(s)) {
+        			if (!aretes.contains(a)) aretes.add(a);
+        	}
         }
         return aretes;
-    }
-    
-    //CrÃ©ation du graphe
+	}
+    //Création du graphe
     public void creerGraphe(Collection<Arete> aretes){
         for(Arete a : aretes){
-        	ajouteSommet(a.getU());
-        	ajouteSommet(a.getV());
-            ajouteArete(a.getU(), a.getV(), a.getPoids());
+        	if(!listeDAdjacence.keySet().contains(a.getU())) 
+        		this.ajouteSommet(a.getU());
+        	if(!listeDAdjacence.keySet().contains(a.getV())) 
+        		this.ajouteSommet(a.getV());
+        	
+        	this.ajouteArete(a.getU(), a.getV(), a.getPoids());
         }
     }
     
@@ -60,7 +64,7 @@ public class GrapheListe implements Graphe{
         return voisins;
     }
     
-    //VÃ©rifie si deux sommets sont voisins
+    //Vérifie si deux sommets sont voisins
     public boolean sontVoisins(String arg0, String arg1){
         return listeDAdjacence.get(arg0).contains(new Arete(arg0, arg1, 0));
     }

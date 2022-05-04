@@ -23,12 +23,7 @@ public class GrapheMatrice implements Graphe{
 	//Ajoute une arete au graphe
 	public void ajouteArete(String arg0, String arg1, double arg2) {
         int numSommet1 = dictionnaireDeSommets.get(arg0);
-        int numSommet2 = dictionnaireDeSommets.get(arg1);
-        
-        for( ArrayList<Double> ligne : matriceDAdjacence) {
-        	while(ligne.size() < matriceDAdjacence.size()) ligne.add(0.0);
-        }
-        
+        int numSommet2 = dictionnaireDeSommets.get(arg1);        
         matriceDAdjacence.get(numSommet1).set(numSommet2,arg2);
         matriceDAdjacence.get(numSommet2).set(numSommet1,arg2);
         
@@ -41,19 +36,29 @@ public class GrapheMatrice implements Graphe{
 	    matriceDAdjacence.add(new ArrayList<Double>());
 	    for (int i = 0; i < matriceDAdjacence.size(); i++) {
 	    	matriceDAdjacence.get(i).add(0.0);
-	        }
 	    }
+		for (int j = 0; j < matriceDAdjacence.size()-1; j++) {
+			matriceDAdjacence.get(dictionnaireDeSommets.size()-1).add(0.0);
+		}
+	    
+	}
 
 	@Override
-	//CrÃ©ation du graphe
+	//Création du graphe
 	public void creerGraphe(Collection<Arete> arg0) {
+		
         for (Arete arete : arg0) {
-            ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
+        	if(!dictionnaireDeSommets.keySet().contains(arete.getU())) 
+        		this.ajouteSommet(arete.getU());
+        	if(!dictionnaireDeSommets.keySet().contains(arete.getV())) 
+        		this.ajouteSommet(arete.getV());
+        	
+        	this.ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
         }
 		
 	}
 	
-	//Renvoie la clÃ© d'un Map Ã  partir de la valeur (seulement avec les assocations un-Ã -un)
+	//Renvoie la clé d'un Map à partir de la valeur (seulement avec les assocations un-à-un)
 	public static <T,E> T getKeysByValue(Map<T,E> map, E value){
 		for(Entry<T,E> entry : map.entrySet()) {
 			if (value.equals(entry.getValue())) {
@@ -70,7 +75,7 @@ public class GrapheMatrice implements Graphe{
         ArrayList<Arete> aretes = new ArrayList<Arete>();
    
         for (int i = 0; i < matriceDAdjacence.size(); i++) {
-            for (int j = 0; j < matriceDAdjacence.size(); j++) {
+            for (int j = i; j < matriceDAdjacence.size(); j++) {
                 if (matriceDAdjacence.get(i).get(j) != 0) {
                     aretes.add(new Arete(getKeysByValue(dictionnaireDeSommets,i),getKeysByValue(dictionnaireDeSommets,i), matriceDAdjacence.get(i).get(j)));
                 }
@@ -100,7 +105,7 @@ public class GrapheMatrice implements Graphe{
 	    }
 
 	@Override
-	//VÃ©rifie si deux sommets sont voisins
+	//Vérifie si deux sommets sont voisins
     public boolean sontVoisins(String sommet1, String sommet2) {
         int numSommet1 = dictionnaireDeSommets.get(sommet1);
         int numSommet2 = dictionnaireDeSommets.get(sommet2);

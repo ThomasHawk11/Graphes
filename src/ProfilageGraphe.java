@@ -7,17 +7,20 @@ import static sae2_02.FileUtils.loadFile;
 public class ProfilageGraphe {
 
 	public static void main(String args[]){
-		 ArrayList<Arete> a = loadFile("D:\\reseau14.dot");
-		 /*GrapheMatrice g1 = new GrapheMatrice();
-		 g1.creerGraphe(a);
-		 System.out.println(g1.getSommets().size());
-		 System.out.println(g1.getAretes().size());*/
+		 ArrayList<Arete> a = loadFile("D:\\reseauFrance.dot");
 		 
+		 System.out.println("Début Graphe Matrice");
+		 long time = System.currentTimeMillis();
+		 GrapheMatrice g1 = new GrapheMatrice();
+		 g1.creerGraphe(a);
+		 System.out.println((System.currentTimeMillis()-time)/1000.+"secondes");
+		 System.out.println();
+		 
+		 System.out.println("Début Graphe Liste");
+		 long time2 = System.currentTimeMillis();
 		 GrapheListe g2 = new GrapheListe();
 		 g2.creerGraphe(a);
-		 System.out.println(g2.getSommets().size());
-		 System.out.println(g2.getAretes().size());
-		
+		 System.out.println((System.currentTimeMillis()-time2)/1000.+"secondes");
 		
 	}
 
