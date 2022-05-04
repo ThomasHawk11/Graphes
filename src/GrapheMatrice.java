@@ -41,7 +41,7 @@ public class GrapheMatrice implements Graphe{
 	//Création du graphe
 	public void creerGraphe(Collection<Arete> arg0) {
         for (Arete arete : arg0) {
-            ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
+           ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
         }
 		
 	}
