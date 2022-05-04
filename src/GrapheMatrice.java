@@ -1,8 +1,10 @@
+package sae2_02;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 
 import sae2_2.Arete;
 import sae2_2.Graphe;
@@ -22,9 +24,14 @@ public class GrapheMatrice implements Graphe{
 	public void ajouteArete(String arg0, String arg1, double arg2) {
         int numSommet1 = dictionnaireDeSommets.get(arg0);
         int numSommet2 = dictionnaireDeSommets.get(arg1);
+        
+        for( ArrayList<Double> ligne : matriceDAdjacence) {
+        	while(ligne.size() < matriceDAdjacence.size()) ligne.add(0.0);
+        }
+        
         matriceDAdjacence.get(numSommet1).set(numSommet2,arg2);
         matriceDAdjacence.get(numSommet2).set(numSommet1,arg2);
-		
+        
 	}
 
 	@Override
@@ -41,7 +48,7 @@ public class GrapheMatrice implements Graphe{
 	//Création du graphe
 	public void creerGraphe(Collection<Arete> arg0) {
         for (Arete arete : arg0) {
-           ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
+            ajouteArete(arete.getU(), arete.getV(), arete.getPoids());
         }
 		
 	}
