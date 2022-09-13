@@ -1,3 +1,5 @@
+//allows to read .dot files to create a graph
+
 package sae2_02;
 
 import java.io.File;
